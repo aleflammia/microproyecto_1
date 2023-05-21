@@ -4,19 +4,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
     const timerElement = document.getElementById('time');
     const scoreElement = document.getElementById('score-value');
-  
+    
     // Variables
     let cards = [];
     let flippedCards = [];
     let score = 0;
     let timer;
     let timeLeft = 180;
-  
+    
     initializeGame();
-  
+    
+    // guardar el nombre de usuario en LocalStorage
+    function saveUsername(username) {
+      localStorage.setItem('username', username);
+    }
+    
+    // cargar el nombre de usuario desde LocalStorage
+    function loadUsername() {
+      return localStorage.getItem('username') || '';
+    }
     function initializeGame() {
-      startButton.addEventListener('click', () => {
-        const username = prompt('Ingresa tu nombre de usuario');
+        startButton.addEventListener('click', () => {
+            const username = prompt('Ingresa tu nombre de usuario');
         if (username) {
           startGame(username);
         }
@@ -179,15 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // guardar el nombre de usuario en LocalStorage
-    function saveUsername(username) {
-      localStorage.setItem('username', username);
-    }
-  
-    // cargar el nombre de usuario desde LocalStorage
-    function loadUsername() {
-      return localStorage.getItem('username') || '';
-    }
   
     // guardar la puntuación en LocalStorage
     function saveScore(username, score) {
@@ -195,28 +195,28 @@ document.addEventListener('DOMContentLoaded', () => {
       scores.push({ username, score });
       localStorage.setItem('scores', JSON.stringify(scores));
     }
-  
+    
+      // mostrar los puntajes en la tabla
+      function showScores() {
+        const scores = getScores();
+        const tbody = document.querySelector('#scoreboard tbody');
+        tbody.innerHTML = '';
+        scores.sort((a, b) => b.score - a.score);
+        scores.forEach((score) => {
+          const row = document.createElement('tr');
+          const usernameCell = document.createElement('td');
+          usernameCell.textContent = score.username;
+          const scoreCell = document.createElement('td');
+          scoreCell.textContent = score.score;
+          row.appendChild(usernameCell);
+          row.appendChild(scoreCell);
+          tbody.appendChild(row);
+        });
+      }
+    });
+    
     // cargar los puntajes desde LocalStorage
     function getScores() {
       const scores = localStorage.getItem('scores');
       return scores ? JSON.parse(scores) : [];
     }
-  
-    // mostrar los puntajes en la tabla
-    function showScores() {
-      const scores = getScores();
-      const tbody = document.querySelector('#scoreboard tbody');
-      tbody.innerHTML = '';
-      scores.sort((a, b) => b.score - a.score);
-      scores.forEach((score) => {
-        const row = document.createElement('tr');
-        const usernameCell = document.createElement('td');
-        usernameCell.textContent = score.username;
-        const scoreCell = document.createElement('td');
-        scoreCell.textContent = score.score;
-        row.appendChild(usernameCell);
-        row.appendChild(scoreCell);
-        tbody.appendChild(row);
-      });
-    }
-  });

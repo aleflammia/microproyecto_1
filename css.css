@@ -1,0 +1,148 @@
+
+body {
+  font-family: 'Comic-sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #F7D488;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 36px;
+  color: #1B1B1B;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #F0F0F0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1B1B1B;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #F7D488;
+  color: #1B1B1B;
+}
+
+/* Estilos del tablero de juego */
+#game-board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  background-color: #1B1B1B;
+  /* Aquí puedes personalizar los estilos de las tarjetas */
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card .card-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.front-face,
+.back-face {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+/* Estilos de la tabla de puntuaciones */
+#scoreboard {
+  margin-top: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: center;
+}
+
+table th {
+  background-color: #1B1B1B;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Estilos del temporizador y la puntuación */
+#timer,
+#score {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #1B1B1B;
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 600px) {
+  main {
+    padding: 10px;
+  }
+
+  #game-board {
+    margin-top: 10px;
+  }
+
+  .card {
+    width: 80px;
+    height: 80px;
+    margin: 3px;
+  }
+
+  #scoreboard {
+    margin-top: 20px;
+  }
+
+  table th,
+  table td {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  #timer,
+  #score {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+}

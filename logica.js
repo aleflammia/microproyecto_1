@@ -1,22 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener elementos del DOM
     const startButton = document.getElementById('start-button');
     const restartButton = document.getElementById('restart-button');
     const gameBoard = document.getElementById('game-board');
     const timerElement = document.getElementById('time');
     const scoreElement = document.getElementById('score-value');
   
-    // Variables del juego
+    // Variables
     let cards = [];
     let flippedCards = [];
     let score = 0;
     let timer;
     let timeLeft = 180;
   
-    // Inicializar el juego
     initializeGame();
   
-    // Función para inicializar el juego
     function initializeGame() {
       startButton.addEventListener('click', () => {
         const username = prompt('Ingresa tu nombre de usuario');
@@ -27,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
       restartButton.addEventListener('click', restartGame);
     }
   
-    // Función para comenzar el juego
     function startGame(username) {
       startButton.disabled = true;
       restartButton.disabled = false;
@@ -37,11 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       generateCards();
       renderCards();
   
-      // Iniciar temporizador
       timer = setInterval(updateTimer, 1000);
     }
   
-    // Función para reiniciar el juego
     function restartGame() {
       clearInterval(timer);
       timeLeft = 180;
@@ -56,19 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
       restartButton.disabled = true;
     }
   
-    // Función para generar las tarjetas
+    // generar las cartas
     function generateCards() {
       const images = ['imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen8'];
-      cards = [...images, ...images]; // Duplicar las imágenes para tener pares
+      cards = [...images, ...images]; 
   
-      // Barajar las tarjetas usando el algoritmo de Fisher-Yates
+      // Barajar las cartas
       for (let i = cards.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [cards[i], cards[j]] = [cards[j], cards[i]];
       }
     }
   
-    // Función para renderizar las tarjetas en el tablero de juego
+    // renderizar las cartas en el tablero de juego
     function renderCards() {
       for (let i = 0; i < cards.length; i++) {
         const card = document.createElement('div');
@@ -101,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // Función para voltear una tarjeta
+    // voltear una tarjeta
     function flipCard() {
       if (!this.classList.contains('flipped') && !this.classList.contains('found') && flippedCards.length < 2) {
         const frontFace = this.querySelector('.front-face');
@@ -118,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // Función para verificar si hay una coincidencia
+    // verificar si hay un match
     function checkMatch() {
       const card1 = flippedCards[0];
       const card2 = flippedCards[1];
@@ -159,56 +153,56 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // Función para verificar si se completó el juego
+    // verificar si se completo el juego
     function checkGameCompletion() {
       const foundCards = document.querySelectorAll('.found');
       if (foundCards.length === cards.length) {
         clearInterval(timer);
         const username = loadUsername();
-        const maxScore = 1000; // Puntuación máxima posible
+        const maxScore = 1000; // Puntuación máxima 
         const userScore = Math.floor((timeLeft / 180) * maxScore);
         saveScore(username, userScore);
         showScores();
-        alert('¡Felicidades! Has completado el juego.');
+        alert('Juego completado!');
       }
     }
   
-    // Función para actualizar el temporizador
+    // actualizar el temporizador
     function updateTimer() {
       timeLeft--;
       timerElement.textContent = timeLeft;
   
       if (timeLeft === 0) {
         clearInterval(timer);
-        alert('¡Se acabó el tiempo! Inténtalo de nuevo.');
+        alert('Times up! Vuelve a intentarlo');
         restartGame();
       }
     }
   
-    // Función para guardar el nombre de usuario en LocalStorage
+    // guardar el nombre de usuario en LocalStorage
     function saveUsername(username) {
       localStorage.setItem('username', username);
     }
   
-    // Función para cargar el nombre de usuario desde LocalStorage
+    // cargar el nombre de usuario desde LocalStorage
     function loadUsername() {
       return localStorage.getItem('username') || '';
     }
   
-    // Función para guardar la puntuación en LocalStorage
+    // guardar la puntuación en LocalStorage
     function saveScore(username, score) {
       const scores = getScores();
       scores.push({ username, score });
       localStorage.setItem('scores', JSON.stringify(scores));
     }
   
-    // Función para cargar los puntajes desde LocalStorage
+    // cargar los puntajes desde LocalStorage
     function getScores() {
       const scores = localStorage.getItem('scores');
       return scores ? JSON.parse(scores) : [];
     }
   
-    // Función para mostrar los puntajes en la tabla
+    // mostrar los puntajes en la tabla
     function showScores() {
       const scores = getScores();
       const tbody = document.querySelector('#scoreboard tbody');
